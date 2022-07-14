@@ -12,6 +12,7 @@ class Place(models.Model):
     def __str__(self):
         return self.title
 
+
 class Image(models.Model):
     image = models.ImageField("Картинка")
     place = models.ForeignKey(
