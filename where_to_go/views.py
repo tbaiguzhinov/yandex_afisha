@@ -1,34 +1,25 @@
 from django.shortcuts import render
+from places.models import Place
 
 def start_page(request):
     geo_json = {
       "type": "FeatureCollection",
-      "features": [
-        {
-          "type": "Feature",
-          "geometry": {
-            "type": "Point",
-            "coordinates": [37.62, 55.793676]
+      "features": []}
+    
+    places = Place.objects.all()
+    for place in places.iterator():
+      feature = {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+            "coordinates": [place.lng, place.lat]
           },
           "properties": {
-            "title": "«Легенды Москвы",
-            "placeId": "moscow_legends",
-            "detailsUrl": "static/places/moscow_legends.json"
-          }
-        },
-        {
-          "type": "Feature",
-          "geometry": {
-            "type": "Point",
-            "coordinates": [37.64, 55.753676]
-          },
-          "properties": {
-            "title": "Крыши24.рф",
-            "placeId": "roofs24",
-            "detailsUrl": "static/places/roofs24.json"
+            "title": place.title,
+            "placeId": place.placeid,
+            "detailsUrl": f"static/places/{place.placeid}.json"
           }
         }
-      ]
-    }
+      geo_json["features"].append(feature)
     context = {"geo_json": geo_json}
     return render(request, 'index.html', context)
