@@ -10,3 +10,16 @@ class Place(models.Model):
 
     def __str__(self):
         return self.title
+
+class Image(models.Model):
+    image = models.ImageField("Картинка")
+    place = models.ForeignKey(
+        Place,
+        on_delete=models.CASCADE,
+        related_name="images",
+        verbose_name="Место"
+    )
+    order_number = models.IntegerField("Порядковый номер")
+
+    def __str__(self):
+        return f"{self.order_number} {self.place}"
