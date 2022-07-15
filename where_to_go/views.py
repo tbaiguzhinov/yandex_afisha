@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from places.models import Place
+from django.urls import reverse
 
 def start_page(request):
     geo_json = {
@@ -20,7 +21,7 @@ def start_page(request):
             "properties": {
                 "title": place.title,
                 "placeId": place.placeid,
-                "detailsUrl": f"static/places/{place.placeid}.json"
+                "detailsUrl": reverse('places', args=[place.id]),
             }
         }
         geo_json["features"].append(feature)
