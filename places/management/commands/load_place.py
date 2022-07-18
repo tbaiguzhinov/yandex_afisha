@@ -1,19 +1,16 @@
-from django.core.management.base import BaseCommand
-import requests
-import uuid
 import os
+import uuid
+import time
 
-from places.models import Place, Image
+import requests
 from django.core.files.base import ContentFile
-
-
-def load_image(image_link):
-    response = requests.get(image_link)
-    response.raise_for_status()
-    return response.content
+from django.core.management.base import BaseCommand
+from places.models import Image, Place
 
 
 class Command(BaseCommand):
+    """Обработчик команды load_places."""
+
     help = 'Добавляет место Place по заданной ссылке формата .json'
 
     def add_arguments(self, parser):
@@ -23,14 +20,13 @@ class Command(BaseCommand):
             help='Json link to a place to be added',
         )
 
-
     def handle(self, *args, **options):
         response = requests.get(
             url=options['json_link']
         )
         response.raise_for_status()
         content = response.json()
-        
+
         place, created = Place.objects.get_or_create(
             title=content['title'],
             lng=content['coordinates']['lng'],
@@ -42,10 +38,15 @@ class Command(BaseCommand):
             }
         )
         if created:
-            for order_number, image_link in enumerate(content['imgs'], start=1):
+            for order_number, image_link in enumerate(
+                content['imgs'],
+                start=1
+            ):
                 file_name = os.path.split(image_link)[-1]
                 try:
-                    content = ContentFile(load_image(image_link))
+                    response = requests.get(image_link)
+                    response.raise_for_status()
+                    content = ContentFile(response.content)
                 except requests.HTTPError:
                     print("Страница не существует: ", image_link)
                     continue
@@ -53,7 +54,7 @@ class Command(BaseCommand):
                     print("Проблемы с подключением")
                     time.sleep(5)
                     continue
-                                
+
                 image = Image.objects.create(
                     place=place,
                     order_number=order_number,

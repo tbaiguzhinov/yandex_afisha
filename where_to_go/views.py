@@ -1,15 +1,18 @@
-from django.shortcuts import render
+"""Views for places project."""
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404
-from places.models import Place
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 
+from places.models import Place
+
+
 def start_page(request):
+    """Start page."""
     geo_json = {
         "type": "FeatureCollection",
         "features": []
     }
-    
+
     places = Place.objects.all()
     for place in places.iterator():
         feature = {
@@ -28,7 +31,9 @@ def start_page(request):
     context = {"geo_json": geo_json}
     return render(request, 'index.html', context)
 
+
 def get_place(request, place_id):
+    """Return JSON with place description."""
     place = get_object_or_404(Place, id=place_id)
     content = {
       "title": place.title,
@@ -40,5 +45,12 @@ def get_place(request, place_id):
         "lng": place.lng,
         },
     }
-    response = JsonResponse(content, json_dumps_params={'ensure_ascii': False, 'indent': 4})
+    response = JsonResponse(
+        content,
+        json_dumps_params={
+            'ensure_ascii':
+            False,
+            'indent': 4
+        }
+    )
     return response

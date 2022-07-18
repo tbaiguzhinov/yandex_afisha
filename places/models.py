@@ -1,8 +1,11 @@
+"""Models for places project."""
 from django.db import models
 from tinymce.models import HTMLField
 
+
 class Place(models.Model):
     """Модель места."""
+
     title = models.CharField("Название", max_length=100)
     placeid = models.CharField("ID места", max_length=50, unique=True)
     description_short = models.CharField("Короткое описание", max_length=500)
@@ -15,6 +18,8 @@ class Place(models.Model):
 
 
 class Image(models.Model):
+    """Модель изображения."""
+
     image = models.ImageField("Картинка")
     place = models.ForeignKey(
         Place,
