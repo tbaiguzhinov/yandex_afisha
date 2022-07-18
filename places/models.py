@@ -21,7 +21,15 @@ class Image(models.Model):
         related_name="images",
         verbose_name="Место"
     )
-    order_number = models.IntegerField("Порядковый номер")
+    order_number = models.PositiveIntegerField(
+        "Порядковый номер",
+        default=0,
+        blank=False,
+        null=False,
+    )
 
     def __str__(self):
         return f"{self.order_number} {self.place}"
+
+    class Meta:
+        ordering = ['order_number']
