@@ -6,7 +6,7 @@ from tinymce.models import HTMLField
 class Place(models.Model):
     """Модель места."""
 
-    title = models.CharField("Название", max_length=100)
+    title = models.CharField("Название", max_length=100, db_index=True)
     placeid = models.CharField("ID места", max_length=50, unique=True)
     description_short = models.CharField("Короткое описание", max_length=500)
     description_long = HTMLField("Длинное описание")
@@ -32,6 +32,7 @@ class Image(models.Model):
         default=0,
         blank=False,
         null=False,
+        db_index=True,
     )
 
     class Meta:
