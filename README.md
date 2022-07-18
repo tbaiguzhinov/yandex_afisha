@@ -6,8 +6,15 @@
 ## Запуск
 
 - Скачайте код
-- Установите зависимости командой `pip install -r requirements.txt`
-- Запустите сервер командой `python3 manage.py runserver`
+- Установите зависимости командой  
+```pip install -r requirements.txt```
+- Запустите сервер командой  
+```python3 manage.py runserver```
+
+## Загрузка новых мест с фотографиями
+
+- Запустите команду:  
+```python3 manage.py load_place http://адрес/файла.json```
 
 ## Переменные окружения
 
