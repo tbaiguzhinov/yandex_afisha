@@ -9,8 +9,7 @@ class Place(models.Model):
     title = models.CharField("Название", max_length=100, db_index=True)
     description_short = models.TextField(
         "Короткое описание",
-        max_length=500,
-        blank=True
+        blank=True,
     )
     description_long = HTMLField("Длинное описание", blank=True)
     lng = models.FloatField("Широта")
