@@ -8,7 +8,7 @@ from places.models import Place
 
 def create_start_page(request):
     """Start page."""
-    data = {
+    map_content = {
         "type": "FeatureCollection",
         "features": []
     }
@@ -27,8 +27,8 @@ def create_start_page(request):
                 "detailsUrl": reverse('places', args=[place.id]),
             }
         }
-        data["features"].append(feature)
-    context = {"geo_json": data}
+        map_content["features"].append(feature)
+    context = {"geo_json": map_content}
     return render(request, 'index.html', context)
 
 
