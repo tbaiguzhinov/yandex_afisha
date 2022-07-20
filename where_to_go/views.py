@@ -6,7 +6,7 @@ from django.urls import reverse
 from places.models import Place
 
 
-def start_page(request):
+def create_start_page(request):
     """Start page."""
     geo_json = {
         "type": "FeatureCollection",
