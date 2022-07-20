@@ -17,12 +17,12 @@ class ImageInline(SortableInlineAdminMixin, admin.TabularInline):
         """Превью изображения."""
         maximum_height = 200
         return format_html(
-            '<img src="{url}" width="{width}" height={height} />'.format(
-                url=instance.image.url,
-                width=maximum_height*(instance.image.width/instance.image.height),
-                height=maximum_height,
+            '<img src="{}" width="{}" height={} />', 
+            instance.image.url, 
+            maximum_height*(instance.image.width/instance.image.height), 
+            maximum_height
             )
-        )
+        
 
     def get_extra(self, request, obj=None, **kwargs):
         """Уменьшаем число дополнительных форм до 1."""
