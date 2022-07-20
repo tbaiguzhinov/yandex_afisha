@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 import os
-import json
 
 from pathlib import Path
 
@@ -33,7 +32,7 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool("DEBUG", True)
 
-ALLOWED_HOSTS = json.loads(env("ALLOWED_HOSTS", "[]"))
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", "[]")
 
 # Application definition
 
