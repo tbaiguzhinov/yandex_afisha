@@ -7,7 +7,6 @@ class Place(models.Model):
     """Модель места."""
 
     title = models.CharField("Название", max_length=100, db_index=True)
-    placeid = models.CharField("ID места", max_length=50, unique=True)
     description_short = models.TextField(
         "Короткое описание",
         max_length=500,

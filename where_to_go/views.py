@@ -23,7 +23,7 @@ def create_start_page(request):
             },
             "properties": {
                 "title": place.title,
-                "placeId": place.placeid,
+                "placeId": place.id,
                 "detailsUrl": reverse('places', args=[place.id]),
             }
         }
