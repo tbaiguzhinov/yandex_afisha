@@ -42,4 +42,5 @@ class PlaceAdmin(SortableAdminBase, admin.ModelAdmin):
 class ImageAdmin(admin.ModelAdmin):
     """Модель изображения."""
 
-    pass
+    autocomplete_fields = ["place",]
+
