@@ -17,12 +17,11 @@ class ImageInline(SortableInlineAdminMixin, admin.TabularInline):
         """Превью изображения."""
         maximum_height = 200
         return format_html(
-            '<img src="{}" width="{}" height={} />', 
-            instance.image.url, 
-            maximum_height*(instance.image.width/instance.image.height), 
+            '<img src="{}" width="{}" height={} />',
+            instance.image.url,
+            maximum_height*(instance.image.width/instance.image.height),
             maximum_height
             )
-        
 
     def get_extra(self, request, obj=None, **kwargs):
         """Уменьшаем число дополнительных форм до 1."""
@@ -42,5 +41,4 @@ class PlaceAdmin(SortableAdminBase, admin.ModelAdmin):
 class ImageAdmin(admin.ModelAdmin):
     """Модель изображения."""
 
-    autocomplete_fields = ["place",]
-
+    autocomplete_fields = ["place", ]
