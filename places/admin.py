@@ -15,12 +15,11 @@ class ImageInline(SortableInlineAdminMixin, admin.TabularInline):
 
     def image_preview(self, instance):
         """Превью изображения."""
-        maximum_height = 200
+        maximum_height = "200px"
         return format_html(
-            '<img src="{}" width="{}" height={} />',
+            '<img style="max-height:{};" src="{}"/>',
+            maximum_height,
             instance.image.url,
-            maximum_height*(instance.image.width/instance.image.height),
-            maximum_height
             )
 
     def get_extra(self, request, obj=None, **kwargs):
