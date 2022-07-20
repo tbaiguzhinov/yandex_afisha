@@ -37,26 +37,27 @@ class Command(BaseCommand):
                 'description_long': content['description_long'],
             }
         )
-        if created:
-            for order_number, image_link in enumerate(
-                content['imgs'],
-                start=1
-            ):
-                file_name = os.path.split(image_link)[-1]
-                try:
-                    response = requests.get(image_link)
-                    response.raise_for_status()
-                    content = ContentFile(response.content)
-                except requests.HTTPError:
-                    print("Страница не существует: ", image_link)
-                    continue
-                except requests.ConnectionError:
-                    print("Проблемы с подключением")
-                    time.sleep(5)
-                    continue
+        if not created:
+            return
+        for order_number, image_link in enumerate(
+            content['imgs'],
+            start=1
+        ):
+            file_name = os.path.split(image_link)[-1]
+            try:
+                response = requests.get(image_link)
+                response.raise_for_status()
+                content = ContentFile(response.content)
+            except requests.HTTPError:
+                print("Страница не существует: ", image_link)
+                continue
+            except requests.ConnectionError:
+                print("Проблемы с подключением")
+                time.sleep(5)
+                continue
 
-                image = Image.objects.create(
-                    place=place,
-                    order_number=order_number,
-                )
-                image.image.save(file_name, content, save=True)
+            image = Image.objects.create(
+                place=place,
+                order_number=order_number,
+            )
+            image.image.save(file_name, content, save=True)
