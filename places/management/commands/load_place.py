@@ -1,5 +1,4 @@
 import os
-import uuid
 import time
 
 import requests
@@ -32,7 +31,6 @@ class Command(BaseCommand):
             lng=content['coordinates']['lng'],
             lat=content['coordinates']['lat'],
             defaults={
-                'placeid': uuid.uuid4(),
                 'description_short': content['description_short'],
                 'description_long': content['description_long'],
             }
